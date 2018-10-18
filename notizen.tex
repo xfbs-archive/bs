@@ -21,6 +21,7 @@
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{shapes.arrows}
 \usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
 \newtcolorbox{anmerkung}{%
   grow to left by=10pt,
   colback=black!10,
@@ -46,7 +47,7 @@
   stringstyle=\color{green!50!black}}
 
 % nice tables
-\usepackage{booktabs}
+\usepackage{booktabs,array}
 \newcommand{\tablespacing}[1]{\renewcommand{\arraystretch}{#1}}
 
 % links
@@ -104,18 +105,15 @@ Der Nachteil von diesem Ansatz war, dass diese Libraries immer wieder umgeschrie
 \subsection{Exponentielles Wachstum von Hardwarekomplexität}
 
 \begin{figure}\centering
-\includegraphics[width=\linewidth]{media/mooreslaw}
+\includegraphics[trim={1.8cm 1.8cm 1cm 3.6cm},clip,width=0.8\linewidth]{media/mooreslaw}
+\caption{Hardwarekomplexitätswachstum seit 1971.}\label{fig:mooreslaw}
 \end{figure}
 
-Es ergab sich also die Schwierigkeit, dass die Hardware sich so rasant entwickelt. Dies ist graphisch aufgezeigt, wobei man anmerken muss, dass die Skala logarithmisch ist. Das scheinbar lineare Wachstum der Transistoranzahl ist also tatsächlich ein exponentielles. Das nennt man auch Moore's law, nach dem Begründer von Intel.
+Es ergab sich also die Schwierigkeit, dass die Hardware sich so rasant entwickelt. Dies ist in Abbildung \ref{fig:mooreslaw} graphisch aufgezeigt, wobei man anmerken muss, dass die Skala logarithmisch ist. Das scheinbar lineare Wachstum der Transistoranzahl ist also tatsächlich ein exponentielles. Das nennt man auch Moore's law, nach dem Begründer von Intel.
 
 \subsection{Heute}
 
-Heutzutage sind Betriebssysteme \emph{überall}. Von Fernsehehern zu Autos, Servern, Handys bis hin zu Operationssälen. Interessanterweise sind teilweise mehrere Betriebssysteme auf einem Gerät zu finden. Abbildungen \ref{fig:osdevices} und \ref{fig:intelme} zeigen, dass sogar in den Geräten, die wir tagtäglich verwenden, oft mehr steckt, als wir denken.
-
-Die Betriebssysteme, die wir benutzen, haben oft sehr viele Features eingebaut. 
-
-\begin{figure}[h]\centering
+\begin{figure}[p]\centering
 \begin{tikzpicture}
 \node (phone) {\includegraphics[width=8cm]{media/phone}};
 \draw[very thick, white] (1.3,3.1) rectangle (3.2,4.9) node[pos=.5] {\textbf{A11}};
@@ -128,13 +126,14 @@ Die Betriebssysteme, die wir benutzen, haben oft sehr viele Features eingebaut.
 \end{tikzpicture}
 \caption{Betriebssyteme auf Konsumergeräten am Beispiel iPhone}\label{fig:osdevices}
 \end{figure}
-
-\begin{figure}\centering
+\begin{figure}[p]\centering
 \includegraphics[width=0.8\textwidth]{media/intelme}
 \caption{Intel Management Engine. Quelle: Heise.de}\label{fig:intelme}
 \end{figure}
 
+Heutzutage sind Betriebssysteme \emph{überall}. Von Fernsehehern zu Autos, Servern, Handys bis hin zu Operationssälen. Interessanterweise sind teilweise mehrere Betriebssysteme auf einem Gerät zu finden. Abbildungen \ref{fig:osdevices} und \ref{fig:intelme} zeigen, dass sogar in den Geräten, die wir tagtäglich verwenden, oft mehr steckt, als wir denken.
 
+Die Betriebssysteme, die wir benutzen, haben oft sehr viele Features eingebaut. 
 
 \section{Definition}
 
@@ -144,9 +143,39 @@ Wie definiert man eigentlich, was ein Betriebssystem ist, und was nicht? Dazu gi
 
 Man kann ein Betriebssystem als eine Hardwareabstraktionsschicht beschreiben. Das Betriebssytem ist als dafür zuständig, eine Ausführungsumgebung zu erstellen für die Programme, die darauf laufen sollen. Dazu muss das Betriebssystem den Programmen eine Abstraktionsebene bieten, damit diese nicht direkt mit der Hardware interagieren müssen. Außerdem muss das Betriebssyste die Resourcen verwalten und (idealerweise fair) zwischen den Programmen teilen.
 
+Wenn man sich jetzt mal anschaut, wie viel Code eigentlich hinter der Ausführung eines kleinen, simplen Programms steckt, dann merkt man, wie viel eigentlich hinter den Kulissen passieren muss, damit die Programme das tun, was wir von ihnen erwarten. In Abbildung \ref{fig:hardwareabstraktion} ist zu sehen, welche Ebenen eigentlich unter einen Programm liegen, und wie viel Code diese Beinhalten.
+\begin{figure}[!h]\centering\tablespacing{1.4}
+\begin{tabular}{@{}p{3.4cm}p{2.6cm}r@{}}
+\toprule
+\textbf{Ebene} & \textbf{Beispiel} & \textbf{Zeilen}\\
+\midrule
+Java Bytecode 
+  & & \textasciitilde 1\,000\\
+Java Runtime 
+  & \verb|openjdk11| & 8\,047\,913\\
+Support Libraries 
+  & \verb|glib| & 460\,641\\
+  & \verb|libcxx| & 441\,343\\
+System Libraries 
+  & \verb|glibc| & 1\,384\,092\\
+Kernel 
+  & \verb|darwin| & 1\,070\,917\\
+  & \verb|openbsd| & 2\,235\,267\\
+  & \verb|netbsd| & 16\,735\,800\\
+  & \verb|linux| & 17\,120\,205\\
+  & \verb|windows| & \textasciitilde 65\,000\,000\\
+Hardware &&\\
+\bottomrule 
+\end{tabular}
+\caption{Hardwareabstraktionsebenen und Codegröße}\label{fig:hardwareabstraktion}
+\end{figure}
+
+\begin{anmerkung}
+Ich habe mir mal die Freiheit genommen, die Zeilen Sourcecode für die meisten Projekte hier durchzuzählen. Dazu habe ich das Programm \verb|cloc| benutzt (auf macOS mit \verb|brew install cloc| installierbar). Die \verb|libcxx| ist die C++ Standard Library, die vom Clang Compiler des LLVM Projekt genutzt wird (wird verwendet von iOS, macOS, Linux, usw.). Der macOS Kernel, \verb|darwin|, ist Quelloffen, deswegen habe ich den auch mitgenommen. Allerdings muss man dazu sagen, dass dieser modular aufgebaut ist, und hier keine Module mitgenommen wurden, deswegen sind die Resultate nicht direkt verlgeichbar. Bei den BSDs habe ich den \emph{gesamten} Quelltext ausgewertet, das behinhaltet aber auch Code, der nicht unbedingt im Kernel steckt.
+\end{anmerkung}
 
 
-Wenn man sich jetzt Mal anschaut, wie viel Code eigentlich hinter der ausführung eines kleinen, simplen Programms steckt, dann merkt man, wie viel eigentlich hinter den Kulissen passieren muss, damit die Programme das tun, was wir von ihnen erwarten.
+Außerdem musste man ja.
 
 \end{document}
 
