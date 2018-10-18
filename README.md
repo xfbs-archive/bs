@@ -35,4 +35,6 @@ Diese Veranstaltung wird *nicht* aufgezeichnet. Es findet am 19.12.2018 eine Tes
 
 ## Literatur
 
-*   Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau: *Operating Systems: Three Easy Pieces*. Arpaci-Dusseau Books. Frei verfügbar unter <http://pages.cs.wisc.edu/~remzi/OSTEP/>. 
+*   Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau: *Operating Systems: Three Easy Pieces*. Arpaci-Dusseau Books. Frei verfügbar unter <http://pages.cs.wisc.edu/~remzi/OSTEP/>. **Anmerkung der Redaktion: sehr gutes Buch.**
+*   A. Tanenbaum: *Modern Operating Systems*. Prentice Hall.
+*   Silberschatz et al.: *Operating Systems Concepts*. John Wiley and Sons.
