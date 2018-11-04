@@ -27,14 +27,13 @@ Diese Veranstaltung wird *nicht* aufgezeichnet. Es findet am 19.12.2018 eine Tes
 
 ## Vorlesungen
 
-*   Vorlesung vom 17.10.2018. [Folien](folien/01-intro-2018.pdf).
-    *   Einleitung und Überblick
-    *   [Artikel über das Merkel-Phone](https://os.inf.tu-dresden.de/papers_ps/icdcs2017-lateral-thinking.pdf)
-        
-        >   MMU-based isolation can even run entire legacy operating systems using paravirtualization techniques [23]. This approach was used on ARM hardware to implement Simko3, the so-called Merkel-Phone, a smartphone that is based on the L4Re system. The phone offers two Android systems side-by-side on the same phone, allowing the user to separate private and business use within one device. This separation is accomplished by running two virtual machines, each running its own instance of Android.
+*   Organisatorisches und Einführung (17.10.2018). [Folien](https://moodle.tu-darmstadt.de/mod/resource/view.php?id=365279). [Artikel über das Merkel-Phone](https://os.inf.tu-dresden.de/papers_ps/icdcs2017-lateral-thinking.pdf).
+*   Prozesse und Interprozess-Kommunikation (24.10.2018). [Folien](https://moodle.tu-darmstadt.de/mod/resource/view.php?id=368440).
+*   Threads (31.10.2018). [Folien](https://moodle.tu-darmstadt.de/mod/resource/view.php?id=370391).
 
-    *   History of Operating Systems
-    *   Definitions of Operating Systems
+## Übungen
+
+*   Processes and IPC (29.10.2018 – 9.11.2018). [Handout](https://moodle.tu-darmstadt.de/mod/resource/view.php?id=368618).
 
 ## Literatur
 
